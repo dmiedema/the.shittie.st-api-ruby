@@ -3,6 +3,6 @@ require 'sinatra'
 set :env, :production
 disable :run
 
-require './base.rb'
+require 'base'
 
 run Sinatra::Application
