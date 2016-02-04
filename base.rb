@@ -97,7 +97,7 @@ post '/url' do
   url = Base64.urlsafe_encode64(data['url'])
   key = Digest::SHA256.hexdigest(url)[0..8] # Take first 8 characters
   db.execute(" INSERT OR IGNORE INTO URLs ( Key, URL ) VALUES ( ?, ? )", key, url)
-  responseMessage(request, key)
+  responseMessage(request, {"key" => key, "url" => "https://the.shittie.st/url/#{key}"})
 end
 
 private
