@@ -84,9 +84,6 @@ get '/url/create' do
     halt 400, 'no `url` param'
   end
   key = createKeyForURL(db, data)
-  if env['HTTP_ACCEPT'].nil?
-    env['HTTP_ACCEPT'] = 'application/json'
-  end
   responseMessage(request, {"key" => key, "shortURL" => "https://the.shittie.st/url/#{key}"})
 end
 
