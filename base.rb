@@ -81,7 +81,7 @@ end
 get '/url/create' do
   data = params['url']
   if data.nil?
-    halt 400, 'no `url` param'
+    halt 400, 'no `url` param. Try again with a `url` param. Like `create?url=[some URL]`'
   end
   key = createKeyForURL(db, data)
   responseMessage(request, {"key" => key, "shortURL" => "https://the.shittie.st/url/#{key}"})
