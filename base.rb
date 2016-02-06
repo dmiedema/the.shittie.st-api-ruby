@@ -88,19 +88,29 @@ get '/url/:id' do
   end
 end
 
+get '/url/create' do
+  data = params['url']
+  if data.nil?
+    halt 400, 'no `url` param'
+  end
+  key = createKeyForURL(data)
+  if env['HTTP_ACCEPT'].nil?
+    env['HTTP_ACCEPT'] = 'application/json'
+  end
+  responseMessage(request, {"key" => key, "shortURL" => "https://the.shittie.st/url/#{key}"})
+end
+
 post '/url' do
   request.body.rewind # just in case
   data = JSON.parse(request.body.read)
   if data.nil?
     halt 400, 'no data...'
   end
-  url = Base64.urlsafe_encode64(data['url'])
-  key = Digest::SHA256.hexdigest(url)[0..8] # Take first 8 characters
-  db.execute(" INSERT OR IGNORE INTO URLs ( Key, URL ) VALUES ( ?, ? )", key, url)
+  key = createKeyForURL(data['url'])
   if env['HTTP_ACCEPT'].nil?
     env['HTTP_ACCEPT'] = 'application/json'
   end
-  responseMessage(request, {"key" => key, "url" => "https://the.shittie.st/url/#{key}"})
+  responseMessage(request, {"key" => key, "shortURL" => "https://the.shittie.st/url/#{key}"})
 end
 
 private
@@ -111,3 +121,11 @@ def responseMessage(req, obj)
     return obj
   end
 end
+
+def createKeyForURL(url)
+  url = Base64.urlsafe_encode64(url)
+  key = Digest::SHA256.hexdigest(url)[0..8] # Take first 8 characters
+  db.execute(" INSERT OR IGNORE INTO URLs ( Key, URL ) VALUES ( ?, ? )", key, url)
+  return key
+end
+
