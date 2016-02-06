@@ -91,7 +91,7 @@ post '/url' do
   request.body.rewind # just in case
   data = JSON.parse(request.body.read)
   if data.nil?
-    halt 400, 'no data...'
+    halt 400, 'no data... I need a `url` key in the JSON POST body'
   end
   key = createKeyForURL(db, data['url'])
   if env['HTTP_ACCEPT'].nil?
