@@ -123,9 +123,9 @@ def responseMessage(req, obj)
 end
 
 def createKeyForURL(url)
-  url = Base64.urlsafe_encode64(url)
-  key = Digest::SHA256.hexdigest(url)[0..8] # Take first 8 characters
-  db.execute(" INSERT OR IGNORE INTO URLs ( Key, URL ) VALUES ( ?, ? )", key, url)
+  encodedURL = Base64.urlsafe_encode64(url)
+  key = Digest::SHA256.hexdigest(encodedURL)[0..8] # Take first 8 characters
+  db.execute(" INSERT OR IGNORE INTO URLs ( Key, URL ) VALUES ( ?, ? )", key, encodedURL)
   return key
 end
 
