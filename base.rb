@@ -75,7 +75,7 @@ db.execute <<-SQL
 SQL
 
 get '/url' do
-  responseMessage(request, 'URL shortener. Do a `POST` with JSON ```{"url":"some://url"}```')
+  responseMessage(request, 'URL shortener. Do a `POST` with JSON ```{"url":"some://url"}``` Or a `GET` to ```url/create?url=[your url here]```')
 end
 
 get '/url/create' do
@@ -83,7 +83,7 @@ get '/url/create' do
   if data.nil?
     halt 400, 'no `url` param'
   end
-  key = createKeyForURL(data)
+  key = createKeyForURL(db, data)
   if env['HTTP_ACCEPT'].nil?
     env['HTTP_ACCEPT'] = 'application/json'
   end
@@ -96,7 +96,7 @@ post '/url' do
   if data.nil?
     halt 400, 'no data...'
   end
-  key = createKeyForURL(data['url'])
+  key = createKeyForURL(db, data['url'])
   if env['HTTP_ACCEPT'].nil?
     env['HTTP_ACCEPT'] = 'application/json'
   end
@@ -122,7 +122,7 @@ def responseMessage(req, obj)
   end
 end
 
-def createKeyForURL(url)
+def createKeyForURL(db, url)
   encodedURL = Base64.urlsafe_encode64(url)
   key = Digest::SHA256.hexdigest(encodedURL)[0..8] # Take first 8 characters
   db.execute(" INSERT OR IGNORE INTO URLs ( Key, URL ) VALUES ( ?, ? )", key, encodedURL)
