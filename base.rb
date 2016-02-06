@@ -78,16 +78,6 @@ get '/url' do
   responseMessage(request, 'URL shortener. Do a `POST` with JSON ```{"url":"some://url"}```')
 end
 
-get '/url/:id' do
-  row = db.execute(" SELECT URL from URLs WHERE Key = ?", params['id']).first
-  puts row.class
-  if row.empty?
-    halt 404, 'nope nope nope'
-  else
-    redirect (Base64.urlsafe_decode64(row.first)), 301
-  end
-end
-
 get '/url/create' do
   data = params['url']
   if data.nil?
@@ -111,6 +101,16 @@ post '/url' do
     env['HTTP_ACCEPT'] = 'application/json'
   end
   responseMessage(request, {"key" => key, "shortURL" => "https://the.shittie.st/url/#{key}"})
+end
+
+get '/url/:id' do
+  row = db.execute(" SELECT URL from URLs WHERE Key = ?", params['id']).first
+  puts row.class
+  if !row || row.empty?
+    halt 404, 'nope nope nope'
+  else
+    redirect (Base64.urlsafe_decode64(row.first)), 301
+  end
 end
 
 private
