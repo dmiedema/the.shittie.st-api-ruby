@@ -15,7 +15,7 @@ get '/api' do
 end
 
 get '/scale' do
-  redirect('https://en.wikipedia.org/wiki/Bristol_stool_scale'), 301
+  redirect 'https://en.wikipedia.org/wiki/Bristol_stool_scale', 301
 end
 
 namespace '/api' do
