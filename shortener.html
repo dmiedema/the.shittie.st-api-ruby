@@ -64,7 +64,8 @@
           }
         };
         ajax.open("POST", "/url", true);
-        ajax.send({url: textInput.value});
+        ajax.setRequestHeader("Content-type", "application/json");
+        ajax.send(JSON.stringify({url: textInput.value}));
       };
       console.log(submitButton);
     </script>
