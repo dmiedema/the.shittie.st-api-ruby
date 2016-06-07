@@ -52,6 +52,7 @@
       var textInput = document.getElementById('url');
       var submitButton = document.getElementById('submit-button');
       submitButton.onclick = function() {
+        if (!textInput.value) { return; }
         var ajax = new XMLHttpRequest();
         ajax.onreadystatechange = function() {
           if (this.readyState === XMLHttpRequest.DONE) {
@@ -63,7 +64,7 @@
           }
         };
         ajax.open("POST", "/url", true);
-        ajax.send({url: textInput.text});
+        ajax.send({url: textInput.value});
       };
       console.log(submitButton);
     </script>
