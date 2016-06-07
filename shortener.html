@@ -1,5 +1,4 @@
 <html>
-  <!-- 100% fair trade, artisinal, hand crafted HTML, CSS, and JS -->
   <head>
     <title>Shittie.st URL shrtnr</title>
     <meta name="viewport" content="width=device-width">
@@ -38,34 +37,38 @@
             <form action="url" method="post">
           </noscript>
           <input id="url" type="text" placeholder="https://some.shitty.url" />
-          <br/> 
-          <input id="submit-button" type="submit" value="shrtn" />
+          <br/>
+          <div id="button"></div>
           <noscript>
+          <input id="submit-button" type="submit" value="shrtn" />
             </form>
           </noscript>
-          <div class="body" id="output"></div>
+          <div id="output"></div>
       <br />
       </div> <!-- body -->
     </body>
     <script>
-      var outputDiv = document.getElementById('output');
+      var buttonDiv = document.getElementById('button');
+      buttonDiv.innerHTML = "<button id='submit-button'>shrtn</button>"
+    var outputDiv = document.getElementById('output');
 
       var textInput = document.getElementById('url');
       var submitButton = document.getElementById('submit-button');
       submitButton.onclick = function() {
         if (!textInput.value) { return; }
         var ajax = new XMLHttpRequest();
-        ajax.onreadystatechange = function() {
-          if (this.readyState === XMLHttpRequest.DONE) {
-            if (this.status === 200) {
-              outputDiv.innterHTML = JSON.parse(this.responseText)['shortURL'];
-            } else {
-              outputDiv.innterHTML = this.responseText;
-            }
+        ajax.onload = function() {
+          if (this.status === 200) {
+            shortURL = JSON.parse(this.response)['message']['shortURL'];
+            outputDiv.innerHTML = "<a href='" + shortURL + "'>" + shortURL + "</a>";
+          } else {
+            outputDiv.innerHTML = this.response;
           }
         };
+
         ajax.open("POST", "/url", true);
         ajax.setRequestHeader("Content-type", "application/json");
+        ajax.setRequestHeader("Accept", "application/json");
         ajax.send(JSON.stringify({url: textInput.value}));
       };
     </script>
