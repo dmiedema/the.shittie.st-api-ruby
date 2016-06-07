@@ -1,4 +1,5 @@
 <html>
+  <!-- 100% fair trade, artisinal, hand crafted HTML, CSS, and JS -->
   <head>
     <title>Shittie.st URL shrtnr</title>
     <meta name="viewport" content="width=device-width">
@@ -48,12 +49,16 @@
       </div> <!-- body -->
     </body>
     <script>
+      // Inject our button since we have JS
       var buttonDiv = document.getElementById('button');
       buttonDiv.innerHTML = "<button id='submit-button'>shrtn</button>"
-    var outputDiv = document.getElementById('output');
+
+      // Get our output div
+      var outputDiv = document.getElementById('output');
 
       var textInput = document.getElementById('url');
       var submitButton = document.getElementById('submit-button');
+
       submitButton.onclick = function() {
         if (!textInput.value) { return; }
         var ajax = new XMLHttpRequest();
@@ -70,7 +75,7 @@
         ajax.setRequestHeader("Content-type", "application/json");
         ajax.setRequestHeader("Accept", "application/json");
         ajax.send(JSON.stringify({url: textInput.value}));
-      };
+      }; // end onclick
     </script>
 </html>
 
