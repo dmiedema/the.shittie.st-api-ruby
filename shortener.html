@@ -1,4 +1,5 @@
 <html>
+  <!-- 100% fair trade, artisinal, hand crafted HTML, CSS, and JS -->
   <head>
     <title>Shittie.st URL shrtnr</title>
     <meta name="viewport" content="width=device-width">
@@ -47,7 +48,7 @@
       </div> <!-- body -->
     </body>
     <script>
-    var outputDiv = document.getElementById('output');
+      var outputDiv = document.getElementById('output');
 
       var textInput = document.getElementById('url');
       var submitButton = document.getElementById('submit-button');
@@ -67,7 +68,6 @@
         ajax.setRequestHeader("Content-type", "application/json");
         ajax.send(JSON.stringify({url: textInput.value}));
       };
-      console.log(submitButton);
     </script>
 </html>
 
