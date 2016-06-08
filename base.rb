@@ -130,4 +130,3 @@ def createKeyForURL(db, url)
   db.execute(" INSERT OR IGNORE INTO URLs ( Key, URL ) VALUES ( ?, ? )", key, encodedURL)
   return key
 end
-
