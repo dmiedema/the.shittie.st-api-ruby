@@ -80,7 +80,6 @@ SQL
 
 get '/url' do
   send_file "shortener.html"
-  # responseMessage(request, 'URL shortener. Do a `POST` with JSON ```{"url":"some://url"}``` Or a `GET` to ```url/create?url=[your url here]```')
 end
 
 get '/url/create' do
