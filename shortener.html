@@ -34,15 +34,11 @@
         <h1 style="margin-bottom: 5px;">
           Shittie.st URL shrtnr
         </h1>
-          <noscript>
-            <form action="url" method="post">
-          </noscript>
           <input id="url" type="text" placeholder="https://some.shitty.url" />
           <br/>
           <div id="button"></div>
           <noscript>
-          <input id="submit-button" type="submit" value="shrtn" />
-            </form>
+            <p>I suck and require Javascript. Sorry.</p>
           </noscript>
           <div id="output"></div>
       <br />
@@ -65,7 +61,7 @@
         ajax.onload = function() {
           if (this.status === 200) {
             shortURL = JSON.parse(this.response)['message']['shortURL'];
-            outputDiv.innerHTML = "<a href='" + shortURL + "'>" + shortURL + "</a>";
+            outputDiv.innerHTML = shortURL
           } else {
             outputDiv.innerHTML = this.response;
           }
