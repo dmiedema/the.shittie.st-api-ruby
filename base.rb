@@ -28,7 +28,7 @@ namespace '/api' do
   end
 
   get '/shit/:count' do
-    count = params['count'].to_i
+    count = params['count'].to_i.abs
     count = count < 5000 ? count : 5000
     responseMessage(request, "shit " * count)
   end
